@@ -10,6 +10,7 @@ RUN xcaddy build \
 FROM ${NEXTCLOUD_AIO_APACHE_IMAGE} AS base
 
 FROM alpine:3.14 AS modify_caddy
+RUN apk add perl
 COPY --from=base --chown=1000:1000 --chmod=777 /Caddyfile /Caddyfile
 RUN echo ' \
 # Sablier configuration\
