@@ -12,25 +12,25 @@ FROM ${NEXTCLOUD_AIO_APACHE_IMAGE} AS base
 FROM alpine:3.14 AS modify_caddy
 RUN apk add perl
 COPY --from=base --chown=1000:1000 --chmod=777 /Caddyfile /Caddyfile
-RUN echo ' \
+RUN echo -e ' \
 # Sablier configuration\
-(shutdown_on_idle_blocking) { \
-        sablier http://{$SABLIER_HOST}:10000 { \
-                group {args[0]} \
-                session_duration {$SABLIER_SESSION_DURATION} \
-                blocking { \
-                        timeout ${SABLIER_BLOCKING_TIMEOUT} \
-                } \
-        } \
-} \
-\
-(shutdown_on_idle_dynamic) { \
-        sablier http://{$SABLIER_HOST}:10000 { \
-                group {args[0]} \
-                session_duration {$SABLIER_SESSION_DURATION} \
-                dynamic \
-        } \
-} \
+(shutdown_on_idle_blocking) { \n\
+        sablier http://{$SABLIER_HOST}:10000 { \n\
+                group {args[0]} \n\
+                session_duration {$SABLIER_SESSION_DURATION} \n\
+                blocking { \n\
+                        timeout ${SABLIER_BLOCKING_TIMEOUT} \n\
+                } \n\
+        } \n\
+} \n\
+\n\
+(shutdown_on_idle_dynamic) { \n\
+        sablier http://{$SABLIER_HOST}:10000 { \n\
+                group {args[0]} \n\
+                session_duration {$SABLIER_SESSION_DURATION} \n\
+                dynamic \n\
+        } \n\
+} \n\
 ' >> /Caddyfile
 
 # Collabora
